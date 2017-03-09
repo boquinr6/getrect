@@ -51,6 +51,7 @@ var star;
 var keyLeft;  
 var keyRight;
 var keyDown;
+var keyUp;
 
 function create() {
 
@@ -110,7 +111,7 @@ function create() {
     keyLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
     keyRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
     keyDown = game.input.keyboard.addKey(Phaser.Keyboard.S);
-   
+    keyUp = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
     // start game by dropping one block
     createTetris();
@@ -153,6 +154,10 @@ function update() {
     }
     if (keyDown.isDown) {
         tetris.body.gravity.y = tetris.body.gravity.y + 20;
+    }
+    if (keyUp.isDown & tetris.body.gravity.y > 10) {
+        tetris.body.gravity.y = tetris.body.gravity.y - 10;
+
     }
 
     //  Reset the players velocity/ avoid moving inertia - no arrows button down = no movement
