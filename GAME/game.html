@@ -36,6 +36,10 @@ function preload() {
     game.load.image('z', 'assets/z.png');
     // dude is player
     game.load.spritesheet('dude', 'assets/devil.png', 32, 48);
+    //choices between pieces
+    game.load.spritesheet('button1', 'assets/button.png', 50, 71);
+    game.load.spritesheet('button2', 'assets/button.png', 50, 71);
+    game.load.spritesheet('button3', 'assets/button.png', 50, 71);
 }
 
 var player;
@@ -52,6 +56,11 @@ var keyLeft;
 var keyRight;
 var keyDown;
 var keyUp;
+
+//buttons to choose pieces for player 2
+var button1;
+var button2;
+var button3;
 
 function create() {
 
@@ -117,6 +126,28 @@ function create() {
     createTetris();
     // make sure no other block is dropped while this block is falling
     tetrisIsFalling = true;  
+
+    //Button
+    game.stage.backgroundColor = '#182d3b';
+
+    //background = game.add.tileSprite(0, 0, 800, 600, 'background');
+
+    button1 = game.add.button(game.world.centerX, 100, 'button1', actionOnClick, this, 2, 1, 0);
+    button2 = game.add.button(game.world.centerX - 250, 100, 'button2', actionOnClick, this, 2, 1, 0);
+    button3 = game.add.button(game.world.centerX + 250, 100, 'button3', actionOnClick, this, 2, 1, 0);
+
+    button1.onInputOver.add(over, this);
+    button1.onInputOut.add(out, this);
+    button1.onInputUp.add(up, this);
+
+    button2.onInputOver.add(over, this);
+    button2.onInputOut.add(out, this);
+    button2.onInputUp.add(up, this);
+
+    button3.onInputOver.add(over, this);
+    button3.onInputOut.add(out, this);
+    button3.onInputUp.add(up, this);
+
 }
 
 function update() {
@@ -216,6 +247,12 @@ function lose(player, enemies) {
 	game.add.text(30, 30, 'KENYAN lose!', { fontSize: '300px', fill: '#000' });
 	enemies.kill();
 	new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+}
+
+function actionOnClick () {
+
+    console.log("hello");
+
 }
 
 
