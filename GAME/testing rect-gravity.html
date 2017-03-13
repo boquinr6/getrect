@@ -1,0 +1,211 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Phaser - Making your first game, part 9</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+
+//make a game canvas size 800x600 px
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+    // loading assets
+    game.load.image('sky', 'assets/sky.png');  //background
+    game.load.image('ground', 'assets/platform.png');
+    // reaching the star = win/end game
+    game.load.image('star', 'assets/star.png');
+    //touching enemies = player dies
+    game.load.image('enemies', 'assets/firstaid.png');
+    //tetris blocks
+    game.load.image('i', 'assets/i.png');
+    game.load.image('j', 'assets/j.png');
+    game.load.image('l', 'assets/l.png');
+    game.load.image('o', 'assets/o.png');
+    game.load.image('s', 'assets/s.png');
+    game.load.image('t', 'assets/t.png');
+    game.load.image('z', 'assets/z.png');
+    // dude is player
+    game.load.spritesheet('dude', 'assets/devil.png', 32, 48);
+}
+
+var player;
+var platforms;  //ground - immotable objects
+var cursors;  // up/down/left/right arrows to control player
+var tetris;   // each falling tetris
+var tetrises; // group of tetrises
+var tetrisIsFalling;  //
+var enemies;
+var star;
+
+// control falling tetris
+var keyLeft;  
+var keyRight;
+var keyDown;
+var keyUp;
+
+function create() {
+
+    //  We're going to be using physics, so enable the Arcade Physics system
+
+    //NEED TO SWITCH TO physics.2d for better gravity ~ as in Broken Tetris
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    //  A simple background for our game
+    game.add.sprite(0, 0, 'sky');
+    // create a goal at middle screen
+    star = game.add.sprite(350,100,'star');
+    star.enableBody = true; // enable physics for any object that is created in this group
+    // grouping enemies together
+    enemies = game.add.group();
+    enemies.enableBody = true; // enable physics for any object that is created in this group
+
+    //creating 3 enemies within middle bound of screen 
+    var verticalBound = game.world.height*.25 + Math.floor(Math.random() * game.world.height * .5);
+    var e1 = enemies.create(Math.floor(Math.random() * game.world.width), verticalBound, 'enemies');
+    Vbound = game.world.height*.25 + Math.floor(Math.random() * game.world.height * .5);
+    var e2 = enemies.create(Math.floor(Math.random() * game.world.width), verticalBound, 'enemies');
+    Vbound = game.world.height*.25 + Math.floor(Math.random() * game.world.height * .5);
+    var e3 = enemies.create(Math.floor(Math.random() * game.world.width), verticalBound, 'enemies');
+  	
+    //  The platforms group contains the ground; later: can add more ledges for player to move on
+    platforms = game.add.group();
+    platforms.enableBody = true; // enable physics for any object that is created in this group
+
+    // Here we create the ground (belongs to platforms)
+    var ground = platforms.create(0, game.world.height - 64, 'ground');
+    ground.scale.setTo(2, 2);
+    ground.body.immovable = true; //  Stop ground from falling away when you jump on it
+
+    tetrises = game.add.group();
+   //tetrises.enableBody = true;
+
+    // The player and its settings
+    player = game.add.sprite(32, game.world.height - 150, 'dude');
+    game.physics.arcade.enable(player);
+    //  Player physics properties. Give the little guy a slight bounce.
+    player.body.bounce.y = 0.2;
+    player.body.gravity.y = 300;
+    player.body.collideWorldBounds = true; //avoid running out of game's scene/canvas
+
+    //  3 animations: walking left and right, and standing still
+    player.animations.add('left', [4, 5, 6, 7], 10, true);
+    player.animations.add('right', [8, 9, 10, 11], 10, true);
+    player.animations.add('still', [0,1,2,3], 10, true);
+
+    
+    //  Player keyboard controls.
+    cursors = game.input.keyboard.createCursorKeys();
+   
+
+    // Falling blocks keyboard controls
+    keyLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    keyRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    keyDown = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    keyUp = game.input.keyboard.addKey(Phaser.Keyboard.W);
+
+    // start game by dropping one block
+    createTetris();
+    // make sure no other block is dropped while this block is falling
+    tetrisIsFalling = true;  
+}
+
+function update() {
+
+
+    //  Collide the player with blocks (tetrises), enemies(=death), goal (star), platforms
+    //game.physics.arcade.collide(tetrises, platforms);
+    game.physics.arcade.collide(player, platforms);
+   //game.physics.arcade.collide(player, tetrises);
+   //game.physics.arcade.collide(tetrises, tetrises);
+   // overlap: detect when player touch goal/enemies
+   game.physics.arcade.overlap(player, star, win, null, this);
+   game.physics.arcade.overlap(player, enemies, lose, null, this);
+   // when falling tetris touches ground, turn off the falling indicator
+   // and make sure tetris not sliding on ground, also set mass so that player needs to use force to move
+
+
+
+
+    //  Reset the players velocity/ avoid moving inertia - no arrows button down = no movement
+    player.body.velocity.x = 0;
+    // player control
+    if (cursors.left.isDown)
+    {
+        //  Move to the left
+        player.body.velocity.x = -150;
+
+        player.animations.play('left');
+    }
+    else if (cursors.right.isDown)
+    {
+        //  Move to the right
+        player.body.velocity.x = 150;
+
+        player.animations.play('right');
+    }
+    else
+    {
+        //  Stand still
+        player.animations.stop();
+
+        player.animations.play('still');
+    }
+    
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && player.body.touching.down)
+    {
+        player.body.velocity.y = -250;
+    }
+}
+
+
+// create a random tetris block
+function createTetris() {
+    var tetrisSprite = 'ijlostz'[Math.floor(Math.random() * 'ijlostz'.length)];
+    tetris = tetrises.create(Math.floor(Math.random() * 800), 0, tetrisSprite);
+    game.physics.p2.enable(tetris, true);
+    tetris.body.clearShapes();
+    tetris.body.loadPolygon('physicsData', tetrisSprite.toUpperCase());
+
+    tetris.body.gravity.y = 400;
+    //tetris.body.bounce.y = Math.random() * 0.2;
+    //tetris.body.collideWorldBounds = true;
+    tetris.body.mass = 1;
+    tetris.body.allowRotation = true;
+    
+}
+
+
+// if player reach star/goal, he wins
+function win(player,star) {
+	 game.add.text(30, 30, 'KENYAN win!', { fontSize: '300px', fill: '#000' });
+	 star.kill();
+	 new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+}
+// if player touch enemies, he dies=lose
+function lose(player, enemies) {
+	game.add.text(30, 30, 'KENYAN lose!', { fontSize: '300px', fill: '#000' });
+	enemies.kill();
+	new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
