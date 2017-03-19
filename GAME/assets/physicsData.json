@@ -112,4 +112,56 @@
             "shape": [   32, 14  ,  32, 28  ,  18, 28  ,  18, 14  ]
         }
     ]
+    , 
+    "ham": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   81, 20  ,  57, 22  ,  59, 14  ,  74, 9  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   17, 1  ,  18, 1  ,  46, 3  ,  57, 22  ,  40, 35  ,  12, 33  ,  5, 15  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   57, 22  ,  46, 3  ,  59, 14  ]
+        }
+    ]
+    , 
+    "knife": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   31, 34  ,  41.5, 31  ,  49, 46  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   41.5, 31  ,  31, 34  ,  10, 25  ,  3, 5  ]
+        }
+    ]
+    , 
+    "portion": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   18, 6  ,  32, 25  ,  36, 31  ,  20, 26  ,  10, 22  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   15, 31  ,  20, 26  ,  36, 31  ,  35, 39  ,  29, 44  ,  21, 43  ,  15, 38  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   31, 6  ,  32, 25  ,  18, 6  ,  26, 3  ]
+        }
+    ]
 }
