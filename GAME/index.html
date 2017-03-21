@@ -17,31 +17,65 @@
 <div class="container">
   <a href="index.html">Game</a>
   <a href="pages/credits.html">Credits</a>
-  <a href="pages/instructions.html">Instructions</a>
-<!--   <div class="dropdown">
-    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
-    <div class="dropdown-content" id="myDropdown">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-    </div>
-  </div>  -->
 </div>
 
 <br/>
 
 
 <div class="col-md-4 col-xs-6" id = "column1">
-  <a href="javascript:  toggle('myElement');">Instructions</a>
+  
+  	  <div style="border:3px solid navy; background: white; width: 100px; text-align: center;"> <a id="link">Play Game!</a> </div>
+  <input type="button" style="color:white; background:red;text-align: center; width:100px;" value="End Game" onClick="window.location.reload()">	
+  <br>
+
+  <a style= "border: 2px solid black; font-size: 15px; background: silver;  text-decoration: none;" href="javascript:  toggle('myElement');">Instructions (click to hide)</a>
+  	 
+
+
+
+
    <div  id="myElement" style="display:block"> 
-  <p> Content goes here </p>
+	
+
+
+
+			  <div style= 'border: 1px solid black;'>			
+
+			  <ul> 
+			  <li> Intro: </li>
+			 <li> Goals:
+			 <ol>
+				<li> The stacker’s goal is to crush or trap the player with (objects)</li>
+				<li> The player’s goal is to get to the goal by climbing (objects) that are dropped by the stacker.</li>
+				<li> 			Stacker:
+			Before you drop (object), you get to choose among three different (objects) to drop. After you choose your object, use (WASD) to move (object) as it falls. Try to trap or crush the player with the (objects) you pick.</li>
+				<li> 			Player:
+			Use (LEFT, RIGHT) to move and (UP) to jump. Avoid (objects) and try to jump on them to get to higher ground and reach the goal.</li>
+				<li> Game End:The game ends when either the player’s winning condition or losing condition is met </li>
+				<ol>
+					<li> 
+			Winning Condition:
+			The player reaches the goal and wins! The stacker loses. </li>
+			<li>
+			Losing Condition:
+			The stacker successfully traps or crushes the player. Stacker wins.
+			A game by Raul Boquin, Whitney Fahnbulleh, Nick (Nhat) Nguyen, Emily Ramirez, and Anthony Rosario  </li></ol>
+			
+
+
+			
+			
+
+			</ol>
+			</ul>
+			</div>
     </div>
 
   <br/>
   <br/>
 
-  <div style="border:3px solid navy; background: white; width: 100px; text-align: center;"> <a id="link">Play Game!</a> </div>
-  <input type="button" style="color:white; background:red;" value="End Game" onClick="window.location.reload()">
+
+
 </div>
 
 <div class="col-md-8 col-xs-12" style="oveflow:scroll;"> <script type="text/javascript" src='working.js'> </script> </div>
