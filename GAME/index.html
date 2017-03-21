@@ -1,5 +1,5 @@
 <!doctype html> 
-<html lang="en"> 
+<html lang="en" style="overflow: scroll;"> 
 <head> 
     <meta charset="UTF-8" />
     <script src="js/phaser.min.js"></script>
@@ -8,12 +8,12 @@
   element.style.display = (element.style.display == 'block') ? "none" : "block"; 
   } 
  </script> 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!-- need this for arrow Glyphicon to display correctly -->
 
 <link rel="stylesheet" href="assets/CSS/header.css">
 
 </head>
-<body style="margin:0;">
-
+<body style="margin:0; height: 100%; overflow: scroll;">
 <div class="container">
   <a href="index.html">Game</a>
   <a href="pages/credits.html">Credits</a>
@@ -30,21 +30,21 @@
 
 <br/>
 
-<a href="javascript:  toggle('myElement');">Instructions</a>
- <div  id="myElement" style="display:block"> 
-<p> Content goes here </p>
-  </div>
 
-<br/>
-<br/>
+<div class="col-md-4 col-xs-6" id = "column1">
+  <a href="javascript:  toggle('myElement');">Instructions</a>
+   <div  id="myElement" style="display:block"> 
+  <p> Content goes here </p>
+    </div>
 
-<a id="link">Click this text to play the game!</a>
-<input type="button" value="Click the Button to Reset the Game" onClick="window.location.reload()">
+  <br/>
+  <br/>
 
+  <div style="border:3px solid navy; background: white; width: 250px; text-align: center;"> <a id="link">Click here to play the game!</a> </div>
+  <input type="button" style="color:white; background:red;" value="Click the Button to End the Game" onClick="window.location.reload()">
+</div>
 
-<script type="text/javascript" src='working.js'>
-
-</script>
+<div class="col-md-8 col-xs-12" style="oveflow:scroll;"> <script type="text/javascript" src='working.js'> </script> </div>
 
 </body>
 </html>

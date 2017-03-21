@@ -52,7 +52,6 @@ var levelOne = {
         game.load.image('ground', 'assets/platform.png');
         game.load.image('knife', 'assets/knife.png');
         game.load.image('ham', 'assets/ham.png');
-        game.load.image('heal', 'assets/heal.png');
         game.load.image('portion','assets/portion.png');
 
         //tetris blocks
