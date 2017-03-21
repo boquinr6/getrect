@@ -73,6 +73,8 @@ var levelOne = {
         game.load.audio('sJump', 'assets/sJump.wav');
         game.load.audio('sTeleport', 'assets/sTeleport.wav');
         game.load.audio('sLanding','assets/sLanding.wav');
+        game.load.audio('sGame', ' assets/sGame.wav');
+        //game.load.audio('sMenu', 'assets/sMenu.wav');
     },
     
     create: function() {
@@ -82,7 +84,7 @@ var levelOne = {
     	sJump= game.add.audio('sJump');
     	sHit= game.add.audio('sHit');
     	sLanding = game.add.audio('sLanding');
-
+        this.music = game.add.audio('sGame',1,true);
        //SYSTEM SETTING
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.p2.gravity.y = WORLD_GRAVITY;
@@ -184,12 +186,13 @@ var levelOne = {
      },
 
     update: function() {
-  
+        if (!player.alive) { game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse died!", { fontSize: '128px', fill: 'red' });};
     	if (cursors.left.isDown) {
     		stucktimeLeft++;
     		if (stucktimeLeft > STUCK_THRESHOLD) { 
     			player.loadTexture('ae');
-    			game.add.text(game.world.width/3, 16, "Trapped!! Game Over", { fontSize: '32px', fill: '#000' });
+    			game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse trapped!", { fontSize: '128px', fill: 'red' });
+        
     			setTimeout(trapped, 2000);
     		}
 		}
@@ -198,7 +201,7 @@ var levelOne = {
     		stucktimeRight++;
     		if (stucktimeRight > STUCK_THRESHOLD) { 
     			player.loadTexture('ae');
-    			game.add.text(game.world.width/2 , 16, "Trapped!! Game Over", { fontSize: '32px', fill: '#000' });
+    			game.add.text(game.world.width/2 , 16, "Mouse trapped!", { fontSize: '128px', fill: '#000' });
     			setTimeout(trapped, 2000);
     		}
 		}
@@ -265,10 +268,12 @@ function checkOverlap(body1, body2) {
     var booknife = (knives.children.indexOf(body1.sprite) > - 1) || (knives.children.indexOf(body2.sprite) > - 1);
 	var booportion = (portions.children.indexOf(body1.sprite) > - 1) || (portions.children.indexOf(body2.sprite) > - 1);
 
+    var booham = (hams.children.indexOf(body1.sprite) > - 1) || (hams.children.indexOf(body2.sprite) > - 1);
+    
 	//GOT CUT
     if (boo1 && booknife) {
     	player.damage(10);
-    	var cuttext = game.add.text(20, 40, 'got CUT! -10HP', { fontSize: '300px', fill: '#000' });
+    	var cuttext = game.add.text(20, 40, '-10HP', { fontSize: '300px', fill: 'red' });
     	setTimeout(function() {cuttext.text = "";},2000);
     	
     	if (body1.sprite.key == 'knife') {body1.sprite.kill();} else {body2.sprite.kill();}
@@ -277,7 +282,7 @@ function checkOverlap(body1, body2) {
     //GOT PORTION
         if (boo1 && booportion) {
     	player.health = player.health + 15;
-    	var cuttext = game.add.text(20, 40, '+15HP', { fontSize: '300px', fill: '#000' });
+    	var cuttext = game.add.text(20, 40, '+15HP', { fontSize: '300px', fill: 'red' });
     	setTimeout(function() {cuttext.text = "";},2000);
     	
     	if (body1.sprite.key == 'portion') {body1.sprite.kill();} else {body2.sprite.kill();}
@@ -293,6 +298,14 @@ function checkOverlap(body1, body2) {
                 jumptime = game.time.now;
             }
         }
+    }
+
+    //GOT HAM = WIN
+    if (booham && boo1) {
+        player.kill();
+        this.music.stop();
+        game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse won!", { fontSize: '128px', fill: 'red' });
+        
     }
     return true;
 }
@@ -336,6 +349,7 @@ function hitHP(body, shape1, shape2, equation) {
 	var damage = -m * v * MOMENTUM_FACTOR;
 	if (damage > 0.3) {
 		sHit.play();
+
 	}
 	if (m*v < 0 ) {
 	player.damage(damage);
@@ -355,6 +369,7 @@ function playerSpeedUp(speed) {
 
 function trapped() {
 	player.kill();
+    this.music.stop();
 }
 
 //START GAME @ LEVELONE
