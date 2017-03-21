@@ -1,0 +1,54 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <script src="js/phaser.min.js"></script>
+     <script>function toggle(id){ 
+  var element = document.getElementById(id); 
+  element.style.display = (element.style.display == 'block') ? "none" : "block"; 
+  } 
+ </script> 
+
+<link rel="stylesheet" href="assets/CSS/header.css">
+
+</head>
+<body style="margin:0;">
+
+<div class="container">
+  <a href="index.html">Game</a>
+  <a href="pages/credits.html">Credits</a>
+  <a href="pages/instructions.html">Instructions</a>
+<!--   <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
+    <div class="dropdown-content" id="myDropdown">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div>  -->
+</div>
+
+<br/>
+
+<a href="javascript:  toggle('myElement');">Instructions</a>
+ <div  id="myElement" style="display:block"> 
+<p> Content goes here </p>
+  </div>
+
+<br/>
+<br/>
+
+<a id="link">Click this text to play the game!</a>
+<input type="button" value="Click the Button to Reset the Game" onClick="window.location.reload()">
+
+
+<script type="text/javascript" src='working.js'>
+
+</script>
+
+</body>
+</html>
+
+
+
+

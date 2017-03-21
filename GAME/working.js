@@ -1,3 +1,8 @@
+
+
+// ADDED BY RAUL - A FUNCTION TO CALL FOR UI
+function script() {
+
 var player;
 var platforms;
 var cursors;
@@ -357,3 +362,15 @@ function trapped() {
 var game = new Phaser.Game(450, 600, Phaser.CANVAS, 'getRect');
 game.state.add('start', levelOne, true);
 game.state.start('start');
+
+
+}
+
+
+// Added by Raul - A function that gets the game when you click!
+document.getElementById('link').onclick = function () {
+    script();
+};
+
+
+
