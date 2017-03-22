@@ -57,3 +57,19 @@
 .show {
     display: block;
 }
+
+p, h1, h2, h3, footer{
+    font-family: Tahoma, Arial, sans-serif;
+    color: #f291d5;
+    padding-left: 50px;
+}
+
+body{
+    background-color: #51423a;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+}
+
