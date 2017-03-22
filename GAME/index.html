@@ -16,32 +16,77 @@
 <body style="margin:0; height: 100%; overflow: scroll;">
 <div class="container">
   <a href="index.html">Game</a>
-  <a href="pages/instructions.html">Instructions</a>
   <a href="pages/credits.html">Credits</a>
-<!--   <div class="dropdown">
-    <button class="dropbtn" onclick="myFunction()">Dropdown</button>
-    <div class="dropdown-content" id="myDropdown">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-    </div>
-  </div>  -->
 </div>
 
 <br/>
 
 
-<div class="col-md-4 col-xs-6" id = "column1">
-  <a href="javascript:  toggle('myElement');">Instructions</a>
+<div class="col-md-8 col-xs-6" id = "column1">
+  
+  	  <div style="border:3px solid navy; background: white; width: 100px; text-align: center;"> <a id="link">Play Game!</a> </div>
+  <input type="button" style="color:white; background:red;text-align: center; width:100px;" value="End Game" onClick="window.location.reload()">	
+  <br>
+
+  <a style= "border: 2px solid black; font-size: 15px; background: silver;  text-decoration: none;" href="javascript:  toggle('myElement');">Instructions (click to hide)</a>
+  	 
+
+
+
+
    <div  id="myElement" style="display:block"> 
-  <p> Content goes here </p>
+	
+
+
+
+			  <div style= 'border: 1px solid black;'>			
+
+			<body>  
+			<h1>Intro</h1>
+			<p> In Shibu's Sushi Shop, there's a pesky little mouse trying to feed himself with Shibu's Sushi. Play as the mousey or play as chef Shibu! </p>
+			
+			<h1>Goals</h1>
+			<ul>
+			<li>	The chef’s goal is to crush or trap the mouse with sushi rolls. </li>
+			<li>The mouse’s goal is to get to the goal by climbing sushi rolls that are dropped by the chef. </li> </ul>
+			
+			<h1> How to Play </h1>
+				<h2>Chef </h2>
+				<ol>
+				<li>Before you drop rolls, you get to choose among three different rolls to drop. </li>
+				<li>After you choose your roll, use (WASD) to move the roll as it falls. Try to trap or crush the moouse with the rolls you pick. </li> </ol>
+				
+				<h2>Mouse </h2>
+				<ul>
+				<li>Use (LEFT, RIGHT) to move and (UP) to jump. </li>
+				<li>Avoid rolls and try to jump on them to get to higher ground and reach the goal. </li>
+				<li>Mouse has the ability to accelerate every 2 seconds by pressing (SPACEBAR)</li> </ul>
+
+				<h2>Game End </h2>
+					<p>The game ends when either the mouse’s winning condition or losing condition is met. </p>
+					
+					<h3>Winning Condition </h3>
+					<p>The mouse reaches the goal and wins! The chef loses. </p>
+					
+					<h3>Losing Condition </h3>
+					<p>The chef successfully traps or crushes the mouse. Chef wins. </p>
+			
+			<footer>A game by Raul Boquin, Whitney Fahnbulleh, Nick Ngyuen, Emily Ramirez, and Anthony Rosario </footer>
+
+			 </body>
+
+
+
+			
+			
+			</div>
     </div>
 
   <br/>
   <br/>
 
-  <div style="border:3px solid navy; background: white; width: 100px; text-align: center;"> <a id="link">Play Game!</a> </div>
-  <input type="button" style="color:white; background:red;" value="End Game" onClick="window.location.reload()">
+
+
 </div>
 
 <div class="col-md-8 col-xs-12" style="oveflow:scroll;"> <script type="text/javascript" src='working.js'> </script> </div>

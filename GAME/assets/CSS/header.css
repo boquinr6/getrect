@@ -58,7 +58,7 @@
     display: block;
 }
 
-p, h1, h2, h3, footer{
+p, h1, h2, h3, footer, body, li{
     font-family: Tahoma, Arial, sans-serif;
     color: #f291d5;
     padding-left: 50px;
