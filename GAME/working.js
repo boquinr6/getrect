@@ -66,7 +66,7 @@ var levelOne = {
         game.load.spritesheet('player', 'assets/devil.png', 32, 48);
         game.load.physics("physicsData", 'assets/physicsData.json');
         game.load.spritesheet('ae', 'assets/ae.png',32,48,1);
-        game.load.spritesheet('mouse', 'assets/shapes/mouses.png', 32, 48);
+        game.load.spritesheet('mouse', 'assets/shapes/sushi mouse super scaled-1.png', 32, 48);
 
         //SOUNDS
         game.load.audio('sWalk', 'assets/sWalk.wav');
