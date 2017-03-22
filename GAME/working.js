@@ -44,9 +44,9 @@ var sTeleport;
 
 var sGame;
 
-var levelOne = { 
+var levelOne = {
     preload: function() {
-        
+
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('ground', 'assets/platform.png');
@@ -66,6 +66,7 @@ var levelOne = {
         game.load.spritesheet('player', 'assets/devil.png', 32, 48);
         game.load.physics("physicsData", 'assets/physicsData.json');
         game.load.spritesheet('ae', 'assets/ae.png',32,48,1);
+        game.load.spritesheet('mouse', 'assets/shapes/mouses.png', 32, 48);
 
         //SOUNDS
         game.load.audio('sWalk', 'assets/sWalk.wav');
@@ -76,7 +77,7 @@ var levelOne = {
         game.load.audio('sGame', ' assets/sGame.wav');
         game.load.audio('sIcon', 'assets/sIcon.wav');
     },
-    
+
     create: function() {
     	//SOUNDS
     	sWalk = game.add.audio('sWalk');
@@ -149,7 +150,7 @@ var levelOne = {
         makeObject(game.world.width*1/3, game.world.height*1/5, 'ham', hamsCollisionGroup, hams);
 
         //PLAYER
-        player = game.add.sprite(32, game.world.height*7/8, 'player');
+        player = game.add.sprite(32, game.world.height*7/8, 'mouse');
         game.physics.p2.enable(player, false);
         player.body.fixedRotation = true; // no rotation on player
         player.body.setCollisionGroup(playerCollisionGroup);
@@ -164,9 +165,9 @@ var levelOne = {
 
         //ANIMATION AND CONTROLLER
         //  3 animations: walking left and right, and standing still
-        player.animations.add('left', [4, 5, 6, 7], 10, true);
-        player.animations.add('right', [8, 9, 10, 11], 10, true);
-        player.animations.add('still', [0,1,2,3], 10, true);
+        player.animations.add('left', [3,4], 10, true);
+        player.animations.add('right', [1,2], 10, true);
+        player.animations.add('still', [0], 10, true);
         //  Player keyboard controls.
         cursors = game.input.keyboard.createCursorKeys();
         spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -177,10 +178,10 @@ var levelOne = {
         keyUp = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
 
-        
+
 
         hptext =  game.add.text(16, 16, "HP: " + player.health.toString(), { fontSize: '32px', fill: '#000' });
-        
+
 		game.physics.p2.setPostBroadphaseCallback(checkOverlap, this);
        //create TETRIS on interval
         game.time.events.loop(Phaser.Timer.SECOND * 1,createTetris, this);
@@ -188,23 +189,23 @@ var levelOne = {
 
     update: function() {
         sGame.play("",0,.5,true,false);
-        if (!player.alive) { 
+        if (!player.alive) {
             game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse died!", { fontSize: '128px', fill: 'red' });
             sGame.stop();
         }
     	if (cursors.left.isDown) {
     		stucktimeLeft++;
-    		if (stucktimeLeft > STUCK_THRESHOLD) { 
+    		if (stucktimeLeft > STUCK_THRESHOLD) {
     			player.loadTexture('ae');
     			game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse trapped!", { fontSize: '128px', fill: 'red' });
-        
+
     			setTimeout(trapped, 2000);
     		}
 		}
 		if (cursors.left.isUp) {stucktimeLeft = 0;}
 		if (cursors.right.isDown) {
     		stucktimeRight++;
-    		if (stucktimeRight > STUCK_THRESHOLD) { 
+    		if (stucktimeRight > STUCK_THRESHOLD) {
     			player.loadTexture('ae');
     			game.add.text(game.world.width/2 , 16, "Mouse trapped!", { fontSize: '128px', fill: '#000' });
     			setTimeout(trapped, 2000);
@@ -219,7 +220,7 @@ var levelOne = {
         //PLAYER CONTROL
         player.body.velocity.x = 0;
         if (cursors.left.isDown)
-        {	
+        {
             //  Move to the left
             player.body.velocity.x = -150;
             if (spacebar.isDown) {
@@ -235,18 +236,18 @@ var levelOne = {
             if (spacebar.isDown) {
             	playerSpeedUp(speedUp);
             }
-            /*if (!cursors.up.isDown)*/ 
+            /*if (!cursors.up.isDown)*/
             {sWalk.play("",0,.3,false,false);}
             player.animations.play('right');
         }
-        else {  player.frame = 0;	}//  Stand still 
+        else {  player.frame = 0;	}//  Stand still
 
         if (tetris != undefined) {
             //BLOCK CONTROL
             if (keyLeft.isDown) {
                 tetris.body.velocity.x = -250;
             }
-            if (keyRight.isDown) { 
+            if (keyRight.isDown) {
                 tetris.body.velocity.x = 250;
             }
             if (keyDown.isDown) {
@@ -274,7 +275,7 @@ function checkOverlap(body1, body2) {
 	var booportion = (portions.children.indexOf(body1.sprite) > - 1) || (portions.children.indexOf(body2.sprite) > - 1);
 
     var booham = (hams.children.indexOf(body1.sprite) > - 1) || (hams.children.indexOf(body2.sprite) > - 1);
-    
+
 	//GOT CUT
     if (boo1 && booknife) {
     	player.damage(10);
@@ -283,7 +284,7 @@ function checkOverlap(body1, body2) {
     	sIcon.play();
     	if (body1.sprite.key == 'knife') {body1.sprite.kill();} else {body2.sprite.kill();}
     }
-	
+
     //GOT PORTION
         if (boo1 && booportion) {
     	player.health = player.health + 15;
@@ -293,9 +294,9 @@ function checkOverlap(body1, body2) {
     	if (body1.sprite.key == 'portion') {body1.sprite.kill();} else {body2.sprite.kill();}
     }
 
-    //JUMPING 
-    if (boo1 && (boo3 || boo4 || boo5 || boo6) ) { 
-        if (cursors.up.isDown) {  
+    //JUMPING
+    if (boo1 && (boo3 || boo4 || boo5 || boo6) ) {
+        if (cursors.up.isDown) {
             var start = game.time.now;
             if (start - jumptime > 800) {
                 player.body.velocity.y = -450;
@@ -311,7 +312,7 @@ function checkOverlap(body1, body2) {
         sGame.stop();
         sIcon.play();
         game.add.text(game.world.width * 1/3, game.world.height * 1/2, "Mouse won!", { fontSize: '128px', fill: 'red' });
-        
+
     }
     return true;
 }
@@ -337,13 +338,13 @@ function createTetris() {
 	tetrises.add(tetris);
 }
 function landingSound(body,shape1,shape2,equation) {
-    if ("ijlostz".includes(body.sprite.key) || 
+    if ("ijlostz".includes(body.sprite.key) ||
     	body.sprite.key == "ground") {
     	var momentum = - body.velocity.y * body.mass;
     	if (momentum > 8000 || momentum == -0) {
     		sLanding.play("", 0,1,false,false);
     	}
-	
+
 	}
 
 }
@@ -392,6 +393,3 @@ document.getElementById('link').onclick = function () {
     script();
 
 };
-
-
-
